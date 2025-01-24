@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="product-title">
+    <h4>Thêm sản phẩm</h4>
+  </div>
+  <form cForm class="row g-3">
+    <c-row class="g-3">
+      <c-col [md]="6">
+        <input cFormControl id="product_name" placeholder="Tên sản phẩm" />
+      </c-col>
+      <c-col [md]="6">
+        <input aria-label="file example" cFormControl id="validationText1" required type="file" />
+      </c-col>
+
+      <c-col [md]="3">
+
+        <input cFormControl id="product_price" placeholder="Giá sản phẩm" />
+      </c-col>
+      <c-col [md]="3">
+
+        <select cSelect id="product_type">
+          <option>Quần Áo</option>
+          <option>Giày Dép</option>
+        </select>
+      </c-col>
+      <c-col [md]="3">
+
+        <input cFormControl id="product_quantity" placeholder="Số lượng" />
+      </c-col>
+      <c-col [md]="3">
+
+        <input cFormControl id="product_size" placeholder="Size" />
+      </c-col>
+
+      <c-col [md]="4">
+
+        <input cFormControl id="product_brand" placeholder="Brand" />
+      </c-col>
+      <c-col [md]="4">
+
+        <input cFormControl id="product_material" placeholder="material" />
+      </c-col>
+
+      <c-col [md]="4">
+        <div class="container-checkbox">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Xanh
+          </label>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Đỏ
+          </label>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Tím
+          </label>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Vàng
+          </label>
+        </div>
+
+      </c-col>
+
+      <c-col [xs]="12">
+        <input cFormControl id="product_dicription" placeholder="Mô tả" style="height: 200px;" />
+      </c-col>
+    </c-row>
+    <c-col [xs]="12">
+      <button cButton type="submit">Sign in</button>
+    </c-col>
+  </form>
+</div>

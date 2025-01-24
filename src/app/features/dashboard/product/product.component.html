@@ -1,0 +1,84 @@
+<c-container breakpoint="sm" style="border: 1px;">
+  <div class="product-container">
+    <div class="product-container-header">
+      <div class="product-header-content">
+        <h2>Sản Phẩm</h2>
+        <span style="font-size: 25px; color: gray; margin-left: 20px;">5</span>
+      </div>
+
+
+
+      <div class="product-header-content-btn">
+        <button class="btn-add
+        " (click)="handlerNavite()">Add sản Phẩm</button>
+      </div>
+    </div>
+
+    <div class="product-container-nav">
+
+      <div class="product-search">
+        <span style="color: red;"> tìm kiếm....{{searchText}}</span>
+
+        <!-- [(ngModel)]="text" #item (ngModelChange)="(item.value) -->
+        <input type="text" [formControl]="formQuery" aria-describedby="button-addon1" #item
+          aria-label="Example text with button addon" cFormControl placeholder="Nhập tên sản phẩm" />
+      </div>
+      <div class="product-select">
+        <span>Lọc sản Phẩm</span>
+        <select aria-label="Default select example" cSelect>
+          <option *ngFor="let item of itemSelect">{{item.title}}</option>
+
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="product-container-content">
+      <table cTable hover>
+        <thead>
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">TÊN SẢN PHẨM</th>
+            <th scope="col">THUMB</th>
+            <th scope="col">ĐƠN GIÁ</th>
+            <th scope="col">SỐ LƯỢNG</th>
+            <th scope="col">LOẠI SẢN PHẨM</th>
+            <th scope="col">TRẠNG THÁI</th>
+            <th scope="col">ĐATE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of  data$ | async  let index = index">
+            <ng-container *ngIf="item">
+              <th scope="row">{{ index + 1 }}</th>
+              <td>{{ item.product_name }}</td>
+              <td>
+                <img [src]="item.product_thumb" alt="Thumbnail" width="50" height="50" />
+              </td>
+              <td>{{ item.product_price | currency }}</td>
+              <td>{{ item.product_quantity }}</td>
+              <td>{{item.productType.type_name}}</td>
+              <td>{{item.isDraft}}</td>
+              <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="edit(item)">Edit</button>
+                <button class="btn btn-danger btn-sm " #btnClick (click)="deleted(item)">Delete</button>
+              </td>
+
+
+
+            </ng-container>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+
+</c-container>

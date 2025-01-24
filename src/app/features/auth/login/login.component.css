@@ -1,0 +1,25 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-btn-login {
+  display: flex;
+  margin: 10px;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.form-btn-login .btn-login-cus {
+    width: 100px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+
+}
+
+
+
+
+

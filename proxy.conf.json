@@ -1,0 +1,8 @@
+{
+  "/v1/api": {
+    "target": "https://shop-ecommerce.click",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

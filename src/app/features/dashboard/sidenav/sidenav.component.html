@@ -1,0 +1,12 @@
+<c-sidebar size="sm" visible #sidebar1="cSidebar" class="border-end">
+  <c-sidebar-header class="border-bottom">
+    <c-sidebar-brand [brandFull]="{ src: 'assets/logo-full.png', width: 120, height: 40 }"
+      [brandNarrow]="{ src: 'assets/logo-narrow.png', width: 40, height: 40 }" routerLink="/dashboard">
+      >
+    </c-sidebar-brand>
+  </c-sidebar-header>
+  <c-sidebar-nav [navItems]="navItems" style="color: black;" />
+  <c-sidebar-footer cSidebarToggle="sidebar1" class="border-top" toggle="visible" style="cursor: pointer;">
+    <button cSidebarToggler></button>
+  </c-sidebar-footer>
+</c-sidebar>

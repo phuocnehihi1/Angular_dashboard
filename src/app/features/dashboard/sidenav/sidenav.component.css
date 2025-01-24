@@ -1,0 +1,29 @@
+.sidebar {
+  /* --cui-sidebar-width: 5rem; */
+  --cui-sidebar-bg: #f8f9fa;
+  font-size: 1rem;
+  width: var(--cui-sidebar-width);
+  background-color: var(--cui-sidebar-bg);
+  height: 100vh;
+  transition: all 5s ease;
+}
+/*
+.sidebar-custome {
+
+  width: 16.52rem;
+} */
+.c-sidebar-brand {
+  background-color: brown;
+
+
+}
+.nav-title {
+  font-size: 18px;
+  /* Thay đổi kích thước font */
+  color: #333;
+  /* Đổi màu chữ */
+  font-weight: bold;
+  /* Đậm chữ */
+  text-transform: uppercase;
+  /* Viết hoa */
+}
