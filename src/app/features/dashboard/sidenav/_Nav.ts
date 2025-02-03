@@ -36,7 +36,7 @@ export const navItems = [
   },
 
   {
-    name: 'Oders',
+    name: 'oders',
     url: 'listOders',
     iconComponent: { name: 'cil-arrow-right' },
   },
@@ -46,7 +46,7 @@ export const navItems = [
   },
   {
     name: 'Giảm giá',
-    url: '/discount',
+    url: 'discount',
     iconComponent: { name: 'cil-arrow-right' },
   },
 ];

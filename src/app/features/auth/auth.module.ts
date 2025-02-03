@@ -9,7 +9,7 @@ import { LoginService } from './login/login.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [],
   imports: [
     CommonModule,
     AuthRoutingModule,

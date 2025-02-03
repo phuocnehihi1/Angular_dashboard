@@ -25,10 +25,11 @@ import { Router } from '@angular/router';
   styleUrl: './product.component.css',
 })
 export class ProductComponent implements OnInit {
-  handlerNavite() {
-    console.log('addproduct');
-    console.log(this.router.navigateByUrl('product/addproduct'));
+  handleNavigate() {
+    console.log('Navigating to addproduct');
+    this.router.navigate(['/dashboard/addproduct']);
   }
+
   data: metadata[] = [];
 
   data$: Observable<metadata[]> = new Observable<metadata[]>();

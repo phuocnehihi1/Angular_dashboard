@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarModule } from '@coreui/angular';
+import { CardModule, SidebarModule } from '@coreui/angular';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TableModule, UtilitiesModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
@@ -24,6 +24,10 @@ import { AddProductComponent } from './add-product/add-product.component';
     TableModule,
     UtilitiesModule,
     GridModule,
+    GridModule,
+    FormModule,
+    CardModule,
+    ReactiveFormsModule,
     FormModule,
   ],
   providers: [IconSetService, ProductServices],

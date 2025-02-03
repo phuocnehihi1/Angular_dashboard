@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DefaultBodyComponent } from './core/layouts/default-body/default-body.component';
-import { Title } from '@angular/platform-browser';
+import { userGuard } from './core/guards/user.guard';
+import { LoginComponent } from './features/auth/login/login.component';
 
 const routes: Routes = [
   {
@@ -9,16 +10,16 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full', // Đảm bảo root sẽ điều hướng tới login
   },
+
   {
     path: 'dashboard',
-    // canActivate: [userGuard], // Chặn truy cập nếu chưa đăng nhập
     component: DefaultBodyComponent,
     data: {
       title: 'Admin Page',
     },
     children: [
       {
-        path: 'product',
+        path: '',
         loadChildren: () =>
           import('./features/dashboard/dashboard.module').then(
             (m) => m.DashboardModule
@@ -26,21 +27,18 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/auth/login/login.component').then(
-        (m) => m.LoginComponent
-      ),
-    data: {
-      title: 'Login Page',
-    },
-  },
 
   {
-    path: '**', // Bắt mọi route không xác định
-    redirectTo: 'login',
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      tittle: 'Login Page',
+    },
   },
+  // {
+  //   path: '**',
+  //   redirectTo: 'login',
+  // },
 ];
 
 @NgModule({
