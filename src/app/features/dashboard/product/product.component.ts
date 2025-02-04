@@ -16,6 +16,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { itemSelect } from './selector';
 import { Router } from '@angular/router';
+import { DataServiceService } from '../data-service.service';
 
 @Component({
   selector: 'app-product',
@@ -25,6 +26,9 @@ import { Router } from '@angular/router';
   styleUrl: './product.component.css',
 })
 export class ProductComponent implements OnInit {
+  handlerSubmitAddProduct($event: Event) {
+    throw new Error('Method not implemented.');
+  }
   handleNavigate() {
     console.log('Navigating to addproduct');
     this.router.navigate(['/dashboard/addproduct']);
@@ -40,12 +44,17 @@ export class ProductComponent implements OnInit {
   searchText = '';
   itemSelect = itemSelect;
   datapublishs: Observable<unknown[]> = new Observable<unknown[]>();
-  constructor(private product: ProductServices, private router: Router) {}
+  constructor(
+    private product: ProductServices,
+    private router: Router, // private newProduct: AddProductComponent
+    private dataService: DataServiceService
+  ) {}
   isToggle: boolean = false;
 
   // Loading Darf
   loadProductDarf() {
     this.data$ = this.product.mapData();
+    console.log('L');
   }
 
   // Thực hiện tìm kiếm.
@@ -69,24 +78,9 @@ export class ProductComponent implements OnInit {
     console.log('Edit', metadata);
   }
 
-  // Loading Product Publish
-
-  // loadProductPublish() {
-  //   this.product
-  //     .getProductPublish()
-  //     .pipe(
-  //       map((data) => {
-  //         this.data = data;
-  //       })
-  //     )
-  //     .subscribe();
-  // }
-
-  //
   toggle() {}
 
   ngOnInit(): void {
-    console.log('input', this.searchText);
     this.loadProductDarf();
     this.data$.pipe(
       tap((a) => {
@@ -107,13 +101,13 @@ export class ProductComponent implements OnInit {
         startWith('')
       )
       .subscribe((d) => {
-        console.log('abcd', d);
+        // console.log('abcd', d);
         this.data$
           .pipe(
             delay(500),
             map((data) => {
-              console.log('Lấy dữ liệu từ form', d);
-              console.log('Data Observable', data);
+              // console.log('Lấy dữ liệu từ form', d);
+              // console.log('Data Observable', data);
               return data.filter((x) => {
                 if (!d) return true;
                 return x.product_name.toLowerCase().includes(d.toLowerCase());
@@ -124,7 +118,40 @@ export class ProductComponent implements OnInit {
             this.data$ = of(result);
           });
       });
-    this.product.addPNewProduct().subscribe(console.log);
+
+    this.dataService.data.subscribe({
+      next: (data) => {
+        if (!data.value) {
+          console.log('undifine ');
+        } else {
+          console.log('Đã vào đây product Load ', data.value.arraySizeProduct);
+          this.product
+            .addPNewProduct(
+              data.value.nameProduct,
+              data.value.imageProduct,
+              data.value.priceProduct,
+              data.value.selectProduct,
+              data.value.quantityProduct,
+              data.value.sizeProduct,
+              data.value.brandProduct,
+              data.value.materialProduct,
+              data.value.colorBludProduct,
+              data.value.colorRedProduct,
+              data.value.colorPurpleProduct,
+              data.value.colorYellorProduct,
+              data.value.dicriptionProduct
+            )
+            .subscribe();
+          this.loadProductDarf();
+        }
+      },
+      error: (error) => {
+        console.log('mess Error', error);
+      },
+      complete: () => {
+        console.log('complate');
+      },
+    });
   }
 }
 
@@ -135,3 +162,21 @@ export class ProductComponent implements OnInit {
 //     this.data = this.product.getDataArray(text);
 //   }
 // }
+
+// this.newProduct.currentFormGroup
+//   .pipe(
+//     map((data) => {
+//       return data.value;
+//     })
+//   )
+//   .subscribe({
+//     next: (value) => {
+//       console.log('Value', value);
+//     },
+//     error: (error) => {
+//       console.log('Mess', error);
+//     },
+//     complete: () => {
+//       console.log('complate');
+//     },
+//   });

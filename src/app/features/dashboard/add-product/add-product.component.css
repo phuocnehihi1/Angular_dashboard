@@ -1,10 +1,8 @@
 
 
 .container {
+  margin: 50px 0px;
   width: 100%;
-  width: 100vh;
-  border: 1px solid #000;
-  padding: 10px;
 }
 .active {
   display: none;

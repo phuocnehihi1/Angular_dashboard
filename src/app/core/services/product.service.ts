@@ -101,15 +101,12 @@ export class ProductService {
       'x-client-id': id,
     });
 
-    console.log('Check Headers And id', headers);
-
     return this.http
       .post<any>(this.url + '/products/create', data, { headers })
       .pipe(
         catchError((error) => {
-          console.log('Data Vào đây', data);
           return throwError(() => {
-            console.log('Deleted API Error mess....', error);
+            console.log('New Product API Error mess....', error);
           });
         }),
         tap(() => {

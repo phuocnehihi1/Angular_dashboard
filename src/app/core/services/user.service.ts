@@ -15,7 +15,6 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   login(data: { email: string; password: string }): Observable<any> {
-    console.log('Data:', data);
     return this.http.post<any>(this.url + '/shop/login', data).pipe(
       catchError((error) => {
         console.error('Đã xảy ra lỗi:', error);

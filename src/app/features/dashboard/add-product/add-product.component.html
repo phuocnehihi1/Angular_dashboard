@@ -2,72 +2,187 @@
   <div class="product-title">
     <h4>Thêm sản phẩm</h4>
   </div>
-  <form cForm class="row g-3">
+  <!-- #AddproductForm="ngForm" -->
+  <!-- (ngSubmit)="onSubmit()" -->
+  <form cForm class="row g-3" [formGroup]="formAddProduct">
+    <!-- (submit)="onSubmitAddProduct(AddproductForm)" -->
     <c-row class="g-3">
       <c-col [md]="6">
-        <input cFormControl id="product_name" placeholder="Tên sản phẩm" />
+        <input
+          cFormControl
+          id="product_name"
+          placeholder="Tên sản phẩm"
+          required
+          name="nameProduct"
+          formControlName="nameProduct"
+        />
+        <!-- (ngModel)]="productInfor.dicriptionProduct" -->
+        <!-- [(ngModel)]="productInfor.nameProduct" -->
+        <!-- #nameProduct="ngModel" -->
+        <!-- <div *ngIf="nameProduct.invalid && nameProduct.touched">
+          <div *ngIf="nameProduct.errors?.required">
+            <span>Tên sản phẩm là bắt buộc</span>
+          </div>
+        </div> -->
       </c-col>
       <c-col [md]="6">
-        <input aria-label="file example" cFormControl id="validationText1" required type="file" />
+        <input
+          aria-label="file example"
+          cFormControl
+          id="validationText1"
+          type="file"
+          name="imageProduct"
+          formControlName="imageProduct"
+        />
       </c-col>
+      <!-- [(ngModel)]="productInfor.imageProduct" -->
 
       <c-col [md]="3">
-
-        <input cFormControl id="product_price" placeholder="Giá sản phẩm" />
+        <input
+          cFormControl
+          id="product_price"
+          placeholder="Giá sản phẩm"
+          required
+          name="priceProduct"
+          formControlName="priceProduct"
+        />
       </c-col>
+      <!-- [(ngModel)]="productInfor.priceProduct" -->
+      <!-- [ngModelOptions]="{ standalone: true }" -->
       <c-col [md]="3">
-
-        <select cSelect id="product_type">
+        <select
+          cSelect
+          id="product_type"
+          required
+          name="selectProduct"
+          formControlName="selectProduct"
+        >
+          <!-- [(ngModel)]="productInfor.selectProduct" -->
+          <!-- [ngModelOptions]="{ standalone: true }" -->
           <option>Quần Áo</option>
           <option>Giày Dép</option>
         </select>
       </c-col>
       <c-col [md]="3">
-
-        <input cFormControl id="product_quantity" placeholder="Số lượng" />
+        <input
+          cFormControl
+          id="product_quantity"
+          placeholder="Số lượng"
+          required
+          name="quantityProduct"
+          formControlName="quantityProduct"
+        />
       </c-col>
+      <!-- [(ngModel)]="productInfor.quantityProduct" -->
+      <!-- [ngModelOptions]="{ standalone: true }" -->
       <c-col [md]="3">
-
-        <input cFormControl id="product_size" placeholder="Size" />
+        <input
+          cFormControl
+          id="product_size"
+          placeholder="Size"
+          required
+          name="sizeProduct"
+          formControlName="sizeProduct"
+        />
       </c-col>
-
+      <!-- [(ngModel)]="productInfor.sireProduct" -->
+      <!-- [ngModelOptions]="{ standalone: true }" -->
       <c-col [md]="4">
-
-        <input cFormControl id="product_brand" placeholder="Brand" />
+        <input
+          cFormControl
+          id="product_brand"
+          placeholder="Brand"
+          required
+          name="brandProduct"
+          formControlName="brandProduct"
+        />
+        <!-- [(ngModel)]="productInfor.brandProduct" -->
+        <!-- [ngModelOptions]="{ standalone: true }" -->
       </c-col>
       <c-col [md]="4">
-
-        <input cFormControl id="product_material" placeholder="material" />
+        <input
+          cFormControl
+          id="product_material"
+          placeholder="material"
+          required
+          name="materialProduct"
+          formControlName="materialProduct"
+        />
       </c-col>
+      <!-- [(ngModel)]="productInfor.materialProduct" -->
+      <!-- [ngModelOptions]="{ standalone: true }" -->
 
       <c-col [md]="4">
         <div class="container-checkbox">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Xanh
-          </label>
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-          <label class="form-check-label" for="flexCheckChecked">
-            Đỏ
-          </label>
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Tím
-          </label>
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-          <label class="form-check-label" for="flexCheckChecked">
-            Vàng
-          </label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+            name="colorBludProduct"
+            formControlName="colorBludProduct"
+          />
+          <!-- [(ngModel)]="productInfor.colorBludProduct" -->
+          <!-- [ngModelOptions]="{ standalone: true }" -->
+          <label class="form-check-label" for="flexCheckDefault"> Xanh </label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+            formControlName="colorRedProduct"
+          />
+          <!-- [(ngModel)]="productInfor.colorRedProduct" -->
+          <!-- name="colorRedProduct" -->
+          <!-- [ngModelOptions]="{ standalone: true }" -->
+          <label class="form-check-label" for="flexCheckChecked"> Đỏ </label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+            name="colorPurpleProduct"
+            formControlName="colorPurpleProduct"
+          />
+          <!-- [(ngModel)]="productInfor.colorPurpleProduct" -->
+          <!-- [ngModelOptions]="{ standalone: true }" -->
+          <label class="form-check-label" for="flexCheckDefault"> Tím </label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+            name="colorYellorProduct"
+            formControlName="colorYellorProduct"
+          />
+          <!-- [(ngModel)]="productInfor.colorYellorProduct" -->
+          <!-- [ngModelOptions]="{ standalone: true }" -->
+          <label class="form-check-label" for="flexCheckChecked"> Vàng </label>
         </div>
-
       </c-col>
 
       <c-col [xs]="12">
-        <input cFormControl id="product_dicription" placeholder="Mô tả" style="height: 200px;" />
+        <input
+          cFormControl
+          id="product_dicription"
+          placeholder="Mô tả"
+          style="height: 200px"
+          name="dicriptionProduct"
+          formControlName="dicriptionProduct"
+        />
       </c-col>
+      <!-- [(ngModel)]="productInfor.dicriptionProduct" -->
+      <!-- [ngModelOptions]="{ standalone: true }" -->
     </c-row>
     <c-col [xs]="12">
-      <button cButton type="submit">Sign in</button>
+      <button cButton type="submit" (click)="onSubmit(formAddProduct)">
+        Sign in
+      </button>
     </c-col>
+    {{ formAddProduct.value | json }}
   </form>
 </div>

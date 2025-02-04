@@ -22,6 +22,7 @@ import {
   metadata,
   product,
 } from '../../../core/models/interfaces/product';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -108,15 +109,32 @@ export class ProductServices {
   }
 
   // Add new Service
-  addPNewProduct(): Observable<addProduct> {
+  addPNewProduct(
+    nameProduct: string,
+    imageProduct: string,
+    priceProduct: number,
+    selectProduct: string,
+    quantityProduct: number,
+    sizeProduct: string,
+    brandProduct: string,
+    materialProduct: string,
+    colorBludProduct: false,
+    colorRedProduct: false,
+    colorPurpleProduct: false,
+    colorYellorProduct: false,
+    dicriptionProduct: ''
+  ): Observable<addProduct> {
+    console.log('Đã vào đây product Load ', sizeProduct);
+    const ArraySizeProduct = sizeProduct.split(',').map((item) => item.trim());
+    console.log('Array Size', ArraySizeProduct);
+
     return this.product
       .addNewProduct({
-        product_name: 'Áo khoác',
-        product_thumb: 'sadasdasdsa',
-        product_description:
-          'Giay Da bong ToniKroos - bền bỉ, thoải mái, ôm chân',
-        product_price: 600000,
-        product_quantity: 100,
+        product_name: nameProduct,
+        product_thumb: imageProduct,
+        product_description: dicriptionProduct,
+        product_price: priceProduct,
+        product_quantity: quantityProduct,
         product_type: 'clothings',
         size: ['32', '31', '22'],
         brand: 'Jeans',
