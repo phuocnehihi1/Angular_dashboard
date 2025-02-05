@@ -53,7 +53,7 @@ export class ProductServices {
       map((data) => data.message.metadata),
       tap((metadata) => {
         console.log('Dữ liệu đã lấy:', metadata);
-        this.metadata = metadata; // Nếu cần gán dữ liệu vào thuộc tính của class
+        return metadata; // Nếu cần gán dữ liệu vào thuộc tính của class
       })
     );
   }
@@ -135,8 +135,8 @@ export class ProductServices {
         product_description: dicriptionProduct,
         product_price: priceProduct,
         product_quantity: quantityProduct,
-        product_type: 'clothings',
-        size: ['32', '31', '22'],
+        product_type: selectProduct,
+        size: ArraySizeProduct,
         brand: 'Jeans',
         material: 'Cotton',
         color: ['Đen', 'Trắng', 'RED'],

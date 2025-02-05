@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductServices } from './products.service';
-import { metadata } from '../../../core/models/interfaces/product';
+import { metadata, addProduct } from '../../../core/models/interfaces/product';
 import {
   debounceTime,
   Observable,
@@ -12,6 +12,7 @@ import {
   delay,
   forkJoin,
   mergeMap,
+  Subject,
 } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { itemSelect } from './selector';
@@ -44,6 +45,7 @@ export class ProductComponent implements OnInit {
   searchText = '';
   itemSelect = itemSelect;
   datapublishs: Observable<unknown[]> = new Observable<unknown[]>();
+  onDestroy$: Subject<any> = new Subject<any>();
   constructor(
     private product: ProductServices,
     private router: Router, // private newProduct: AddProductComponent
@@ -54,7 +56,6 @@ export class ProductComponent implements OnInit {
   // Loading Darf
   loadProductDarf() {
     this.data$ = this.product.mapData();
-    console.log('L');
   }
 
   // Thực hiện tìm kiếm.
@@ -74,24 +75,32 @@ export class ProductComponent implements OnInit {
   }
 
   // Thực hiện Edit dữ liệu
-  edit(metadata: metadata) {
-    console.log('Edit', metadata);
+  edit(item: metadata) {
+    this.router.navigate(['/dashboard/updateproduct', item.id]);
+    localStorage.setItem('item', JSON.stringify(item));
   }
 
   toggle() {}
 
   ngOnInit(): void {
     this.loadProductDarf();
-    this.data$.pipe(
-      tap((a) => {
-        console.log(
-          'Data$',
-          a.forEach((x) => {
-            x.product_name;
-          })
-        );
-      })
-    );
+
+    // this.activeRouter.queryParams.subscribe((param) => {
+    //   if (param['reload']) {
+    //     this.loadProductDarf();
+    //   }
+    // });
+
+    // this.data$.pipe(
+    //   tap((a) => {
+    //     console.log(
+    //       'Data$',
+    //       a.forEach((x) => {
+    //         x.product_name;
+    //       })
+    //     );
+    //   })
+    // );
     this.formQuery.valueChanges
       .pipe(
         debounceTime(500),
@@ -118,41 +127,44 @@ export class ProductComponent implements OnInit {
             this.data$ = of(result);
           });
       });
-
-    this.dataService.data.subscribe({
-      next: (data) => {
-        if (!data.value) {
-          console.log('undifine ');
-        } else {
-          console.log('Đã vào đây product Load ', data.value.arraySizeProduct);
-          this.product
-            .addPNewProduct(
-              data.value.nameProduct,
-              data.value.imageProduct,
-              data.value.priceProduct,
-              data.value.selectProduct,
-              data.value.quantityProduct,
-              data.value.sizeProduct,
-              data.value.brandProduct,
-              data.value.materialProduct,
-              data.value.colorBludProduct,
-              data.value.colorRedProduct,
-              data.value.colorPurpleProduct,
-              data.value.colorYellorProduct,
-              data.value.dicriptionProduct
-            )
-            .subscribe();
-          this.loadProductDarf();
-        }
-      },
-      error: (error) => {
-        console.log('mess Error', error);
-      },
-      complete: () => {
-        console.log('complate');
-      },
-    });
   }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next(null);
+  }
+
+  // public addProduct() {
+  //   this.dataService.data.subscribe({
+  //     next: (data) => {
+  //       if (!data.value) {
+  //         console.log('undifine ');
+  //       } else {
+  //         console.log('Đã vào đây product Load ', data.value.arraySizeProduct);
+  //         this.product.addPNewProduct(
+  //           data.value.nameProduct,
+  //           data.value.imageProduct,
+  //           data.value.priceProduct,
+  //           data.value.selectProduct,
+  //           data.value.quantityProduct,
+  //           data.value.sizeProduct,
+  //           data.value.brandProduct,
+  //           data.value.materialProduct,
+  //           data.value.colorBludProduct,
+  //           data.value.colorRedProduct,
+  //           data.value.colorPurpleProduct,
+  //           data.value.colorYellorProduct,
+  //           data.value.dicriptionProduct
+  //         );
+  //         this.loadProductDarf();
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.log('mess Error', error);
+  //     },
+  //     complete: () => {
+  //       console.log('complate');
+  //     },
+  //   });
 }
 
 //   search(text: string) {
@@ -180,3 +192,4 @@ export class ProductComponent implements OnInit {
 //       console.log('complate');
 //     },
 //   });
+// }

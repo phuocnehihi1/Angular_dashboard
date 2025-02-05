@@ -15,15 +15,21 @@
           required
           name="nameProduct"
           formControlName="nameProduct"
+          #myCustomeNameProduct
+          ngModel
         />
+
         <!-- (ngModel)]="productInfor.dicriptionProduct" -->
         <!-- [(ngModel)]="productInfor.nameProduct" -->
         <!-- #nameProduct="ngModel" -->
-        <!-- <div *ngIf="nameProduct.invalid && nameProduct.touched">
-          <div *ngIf="nameProduct.errors?.required">
-            <span>Tên sản phẩm là bắt buộc</span>
+        <div *ngIf="formAddProduct.status && formAddProduct.touched">
+          <div
+            *ngIf="formAddProduct.controls['nameProduct'].errors?.required"
+            style="padding: 5px; color: red"
+          >
+            Tên sản phẩm là bắt buộc.
           </div>
-        </div> -->
+        </div>
       </c-col>
       <c-col [md]="6">
         <input
@@ -46,6 +52,15 @@
           name="priceProduct"
           formControlName="priceProduct"
         />
+
+        <div *ngIf="formAddProduct.status && formAddProduct.touched">
+          <div
+            *ngIf="formAddProduct.controls['priceProduct'].errors?.pattern"
+            style="padding: 5px; color: red"
+          >
+            Giá tiền chỉ được nhập Số.
+          </div>
+        </div>
       </c-col>
       <!-- [(ngModel)]="productInfor.priceProduct" -->
       <!-- [ngModelOptions]="{ standalone: true }" -->
@@ -72,6 +87,13 @@
           name="quantityProduct"
           formControlName="quantityProduct"
         />
+
+        <div
+          *ngIf="formAddProduct.controls['quantityProduct'].errors?.pattern"
+          style="padding: 5px; color: red"
+        >
+          Số lượng chỉ được nhập Số.
+        </div>
       </c-col>
       <!-- [(ngModel)]="productInfor.quantityProduct" -->
       <!-- [ngModelOptions]="{ standalone: true }" -->
@@ -96,6 +118,16 @@
           name="brandProduct"
           formControlName="brandProduct"
         />
+
+        <div *ngIf="formAddProduct.status && formAddProduct.touched">
+          <div
+            *ngIf="formAddProduct.controls['brandProduct'].errors?.required"
+            style="padding: 5px; color: red"
+          >
+            Brand không được để trống.
+          </div>
+        </div>
+
         <!-- [(ngModel)]="productInfor.brandProduct" -->
         <!-- [ngModelOptions]="{ standalone: true }" -->
       </c-col>
@@ -113,7 +145,7 @@
       <!-- [ngModelOptions]="{ standalone: true }" -->
 
       <c-col [md]="4">
-        <div class="container-checkbox">
+        <div class="container-checkbox" formGroupName="colorGroup">
           <input
             class="form-check-input"
             type="checkbox"
@@ -183,6 +215,8 @@
         Sign in
       </button>
     </c-col>
-    {{ formAddProduct.value | json }}
+    <!-- {{ formAddProduct.value | json }}
+    {{ formAddProduct.status | json }}
+    {{ formAddProduct.touched | json }} -->
   </form>
 </div>

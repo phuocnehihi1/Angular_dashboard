@@ -13,6 +13,11 @@ const routes: Routes = [
     children: [
       { path: 'product', component: ProductComponent },
       { path: 'addproduct', component: AddProductComponent },
+      {
+        path: 'updateproduct/:id',
+        component: AddProductComponent,
+        title: 'Update Form',
+      },
     ],
   },
 ];

@@ -114,4 +114,39 @@ export class ProductService {
         })
       );
   }
+  updateProduct(data: {
+    id: number;
+    product_name: string;
+    product_thumb: string;
+    product_description: string;
+    product_price: number;
+    product_quantity: number;
+    product_type: string;
+    size: string[];
+    brand: string;
+    material: string;
+    color: string[];
+    isDraft: boolean;
+    isPublished: boolean;
+  }): Observable<any> {
+    const token = localStorage.getItem('accessToken');
+    const id: number = parseInt(localStorage.getItem('id') || '0', 10);
+    const headers = new HttpHeaders({
+      athorization: token ? token : '',
+      'x-client-id': id,
+    });
+
+    return this.http
+      .post<any>(this.url + '/products/create', data, { headers })
+      .pipe(
+        catchError((error) => {
+          return throwError(() => {
+            console.log('Update API Error mess....', error);
+          });
+        }),
+        tap(() => {
+          console.log('Update product accessfully....');
+        })
+      );
+  }
 }
