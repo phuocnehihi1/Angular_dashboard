@@ -37,3 +37,19 @@ export interface addProduct {
   isDraft: true;
   isPublished: false;
 }
+
+export interface updateProduct {
+  id: number;
+  product_name: string;
+  product_thumb: string;
+  product_description: string;
+  product_price: number;
+  product_quantity: number;
+  product_type: string;
+  size: string[];
+  brand: string;
+  material: string;
+  color: string[];
+  isDraft: true;
+  isPublished: false;
+}

@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, Subscriber, tap, throwError } from 'rxjs';
 import { UserService } from './user.service';
 import { API_CONSTANTS } from '../../shared/constants/apiUrl';
-import { addProduct, product } from '../models/interfaces/product';
+import {
+  addProduct,
+  product,
+  updateProduct,
+} from '../models/interfaces/product';
 const token = localStorage.getItem('accessToken');
 const id: number = parseInt(localStorage.getItem('id') || '0', 10);
 
@@ -94,7 +98,31 @@ export class ProductService {
       })
       .pipe(
         tap(() => {
-          console.log('data,::', data);
+          console.log('New Product asseccfully');
+        }),
+        catchError((error) => {
+          return throwError(() => {
+            console.log('New Product API Error mess....', error);
+          });
+        })
+      );
+  }
+
+  // Update Product
+  updateProduct(data: updateProduct): Observable<any> {
+    const token = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      athorization: token ? token : '',
+      'x-client-id': 1,
+    });
+
+    return this.http
+      .post<any>((this.url + '/products/create').trim(), data, {
+        headers,
+      })
+      .pipe(
+        tap(() => {
+          console.log('Update Product asseccfully');
         }),
         catchError((error) => {
           return throwError(() => {

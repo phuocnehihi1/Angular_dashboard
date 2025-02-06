@@ -16,7 +16,12 @@ export class UpdateProductComponent implements OnInit {
   formAddProduct: FormGroup;
   id: string | null;
 
-  constructor(private fb: FormBuilder, private activeRouter: ActivatedRoute) {}
+  constructor(
+    private fb: FormBuilder,
+    private activeRouter: ActivatedRoute,
+    private proSev: ProductServices,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     let item = localStorage.getItem('item');
     item ? (this.item = JSON.parse(item)) : {};
@@ -79,6 +84,29 @@ export class UpdateProductComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    let id = !isNaN(Number(this.id)) ? Number(this.id) : NaN;
+
+    const arraySize: String[] = form.value.sizeProduct
+      .split(',')
+      .map((item: string) => item.trim());
+    this.proSev
+      .updateProduct({
+        id: id,
+        product_name: form.value.nameProduct,
+        product_thumb: form.value.imageProduct,
+        product_description: form.value.dicriptionProduct,
+        product_price: form.value.priceProduct,
+        product_quantity: form.value.quantityProduct,
+        product_type: 'clothings',
+        size: [arraySize.toString()],
+        brand: form.value.brandProduct,
+        material: form.value.materialProduct,
+        color: ['Đen', 'Trắng', 'RED'],
+        isDraft: true,
+        isPublished: false,
+      })
+      .subscribe();
     localStorage.removeItem('item');
+    this.router.navigate([''], {});
   }
 }

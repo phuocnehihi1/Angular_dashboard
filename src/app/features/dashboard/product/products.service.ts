@@ -21,6 +21,7 @@ import {
   addProduct,
   metadata,
   product,
+  updateProduct,
 } from '../../../core/models/interfaces/product';
 
 @Injectable({
@@ -111,6 +112,37 @@ export class ProductServices {
   addPNewProduct(data: addProduct): Observable<addProduct> {
     return this.product
       .addNewProduct({
+        product_name: data.product_name,
+        product_thumb: data.product_thumb,
+        product_description: data.product_description,
+        product_price: data.product_price,
+        product_quantity: data.product_quantity,
+        product_type: data.product_type,
+        size: data.size,
+        brand: data.brand,
+        material: data.material,
+        color: data.color,
+        isDraft: data.isDraft,
+        isPublished: data.isPublished,
+      })
+      .pipe(
+        delay(300),
+        tap((value) => {
+          alert('Thêm' + value + 'Thành công');
+        }),
+        catchError((error) => {
+          return throwError(() => {
+            new Error('error messess Add new product: ....', error);
+          });
+        })
+      );
+  }
+
+  // Update Data
+  updateProduct(data: updateProduct): Observable<addProduct> {
+    return this.product
+      .updateProduct({
+        id: data.id,
         product_name: data.product_name,
         product_thumb: data.product_thumb,
         product_description: data.product_description,
