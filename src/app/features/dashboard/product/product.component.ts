@@ -31,7 +31,6 @@ export class ProductComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   handleNavigate() {
-    console.log('Navigating to addproduct');
     this.router.navigate(['/dashboard/addproduct']);
   }
 
@@ -83,24 +82,10 @@ export class ProductComponent implements OnInit {
   toggle() {}
 
   ngOnInit(): void {
-    this.loadProductDarf();
+    setTimeout(() => {
+      this.loadProductDarf();
+    }, 1000);
 
-    // this.activeRouter.queryParams.subscribe((param) => {
-    //   if (param['reload']) {
-    //     this.loadProductDarf();
-    //   }
-    // });
-
-    // this.data$.pipe(
-    //   tap((a) => {
-    //     console.log(
-    //       'Data$',
-    //       a.forEach((x) => {
-    //         x.product_name;
-    //       })
-    //     );
-    //   })
-    // );
     this.formQuery.valueChanges
       .pipe(
         debounceTime(500),

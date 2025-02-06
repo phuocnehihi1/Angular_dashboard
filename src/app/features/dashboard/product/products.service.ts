@@ -22,12 +22,12 @@ import {
   metadata,
   product,
 } from '../../../core/models/interfaces/product';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductServices {
+  dataProduct: addProduct;
   metadata: metadata[] = [];
   ProductPublish: metadata[] = [];
   metadataObservable: Observable<metadata>[] = [];
@@ -52,7 +52,6 @@ export class ProductServices {
     return this.product.getShopDraftAll().pipe(
       map((data) => data.message.metadata),
       tap((metadata) => {
-        console.log('Dữ liệu đã lấy:', metadata);
         return metadata; // Nếu cần gán dữ liệu vào thuộc tính của class
       })
     );
@@ -63,7 +62,6 @@ export class ProductServices {
     return this.product.getShoppublishAll().pipe(
       map((data) => data.message.metadata),
       tap((metadata) => {
-        console.log('Dữ liệu đã lấy:', metadata);
         this.metadata = metadata;
       })
     );
@@ -109,39 +107,22 @@ export class ProductServices {
   }
 
   // Add new Service
-  addPNewProduct(
-    nameProduct: string,
-    imageProduct: string,
-    priceProduct: number,
-    selectProduct: string,
-    quantityProduct: number,
-    sizeProduct: string,
-    brandProduct: string,
-    materialProduct: string,
-    colorBludProduct: false,
-    colorRedProduct: false,
-    colorPurpleProduct: false,
-    colorYellorProduct: false,
-    dicriptionProduct: ''
-  ): Observable<addProduct> {
-    console.log('Đã vào đây product Load ', sizeProduct);
-    const ArraySizeProduct = sizeProduct.split(',').map((item) => item.trim());
-    console.log('Array Size', ArraySizeProduct);
 
+  addPNewProduct(data: addProduct): Observable<addProduct> {
     return this.product
       .addNewProduct({
-        product_name: nameProduct,
-        product_thumb: imageProduct,
-        product_description: dicriptionProduct,
-        product_price: priceProduct,
-        product_quantity: quantityProduct,
-        product_type: selectProduct,
-        size: ArraySizeProduct,
-        brand: 'Jeans',
-        material: 'Cotton',
-        color: ['Đen', 'Trắng', 'RED'],
-        isDraft: true,
-        isPublished: false,
+        product_name: data.product_name,
+        product_thumb: data.product_thumb,
+        product_description: data.product_description,
+        product_price: data.product_price,
+        product_quantity: data.product_quantity,
+        product_type: data.product_type,
+        size: data.size,
+        brand: data.brand,
+        material: data.material,
+        color: data.color,
+        isDraft: data.isDraft,
+        isPublished: data.isPublished,
       })
       .pipe(
         delay(300),

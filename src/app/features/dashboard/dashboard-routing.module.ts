@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ProductComponent } from './product/product.component';
 import { userGuard } from '../../core/guards/user.guard';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
       { path: 'addproduct', component: AddProductComponent },
       {
         path: 'updateproduct/:id',
-        component: AddProductComponent,
+        component: UpdateProductComponent,
         title: 'Update Form',
       },
     ],

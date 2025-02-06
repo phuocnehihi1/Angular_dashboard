@@ -10,9 +10,10 @@ import { FormModule } from '@coreui/angular';
 import { ProductServices } from './product/products.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddProductComponent } from './add-product/add-product.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 @NgModule({
-  declarations: [AddProductComponent, ProductComponent],
+  declarations: [AddProductComponent, ProductComponent, UpdateProductComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule, // Dùng CommonModule thay cho BrowserModule

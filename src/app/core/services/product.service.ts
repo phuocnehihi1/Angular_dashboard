@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, Subscriber, tap, throwError } from 'rxjs';
 import { UserService } from './user.service';
 import { API_CONSTANTS } from '../../shared/constants/apiUrl';
-import { product } from '../models/interfaces/product';
+import { addProduct, product } from '../models/interfaces/product';
 const token = localStorage.getItem('accessToken');
 const id: number = parseInt(localStorage.getItem('id') || '0', 10);
 
@@ -12,7 +12,7 @@ const id: number = parseInt(localStorage.getItem('id') || '0', 10);
 })
 export class ProductService {
   url = API_CONSTANTS.BASE_URL;
-
+  dataAdd: any;
   constructor(private http: HttpClient, private user: UserService) {}
 
   _token = localStorage.getItem('accessToken');
@@ -45,6 +45,7 @@ export class ProductService {
       athorization: token ? token : '',
       'x-client-id': id,
     });
+
     return this.http
       .get<product>(this.url + '/products/shop/publish-all', { headers })
       .pipe(
@@ -80,72 +81,25 @@ export class ProductService {
 
   // Add Product
 
-  addNewProduct(data: {
-    product_name: string;
-    product_thumb: string;
-    product_description: string;
-    product_price: number;
-    product_quantity: number;
-    product_type: string;
-    size: string[];
-    brand: string;
-    material: string;
-    color: string[];
-    isDraft: boolean;
-    isPublished: boolean;
-  }): Observable<any> {
+  addNewProduct(data: addProduct): Observable<any> {
     const token = localStorage.getItem('accessToken');
-    const id: number = parseInt(localStorage.getItem('id') || '0', 10);
     const headers = new HttpHeaders({
       athorization: token ? token : '',
-      'x-client-id': id,
+      'x-client-id': 1,
     });
 
     return this.http
-      .post<any>(this.url + '/products/create', data, { headers })
+      .post<any>((this.url + '/products/create').trim(), data, {
+        headers,
+      })
       .pipe(
+        tap(() => {
+          console.log('data,::', data);
+        }),
         catchError((error) => {
           return throwError(() => {
             console.log('New Product API Error mess....', error);
           });
-        }),
-        tap(() => {
-          console.log('Add new product accessfully....');
-        })
-      );
-  }
-  updateProduct(data: {
-    id: number;
-    product_name: string;
-    product_thumb: string;
-    product_description: string;
-    product_price: number;
-    product_quantity: number;
-    product_type: string;
-    size: string[];
-    brand: string;
-    material: string;
-    color: string[];
-    isDraft: boolean;
-    isPublished: boolean;
-  }): Observable<any> {
-    const token = localStorage.getItem('accessToken');
-    const id: number = parseInt(localStorage.getItem('id') || '0', 10);
-    const headers = new HttpHeaders({
-      athorization: token ? token : '',
-      'x-client-id': id,
-    });
-
-    return this.http
-      .post<any>(this.url + '/products/create', data, { headers })
-      .pipe(
-        catchError((error) => {
-          return throwError(() => {
-            console.log('Update API Error mess....', error);
-          });
-        }),
-        tap(() => {
-          console.log('Update product accessfully....');
         })
       );
   }

@@ -30,7 +30,7 @@ export interface addProduct {
   product_price: number;
   product_quantity: number;
   product_type: string;
-  size: number[];
+  size: string[];
   brand: string;
   material: string;
   color: string[];
