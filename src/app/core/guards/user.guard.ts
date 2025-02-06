@@ -18,17 +18,16 @@ export class userGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    return true;
-    // if (this.user.isToken()) {
-    //   const rt = route.component;
-    //   console.log('Check router in guard', rt);
-    //   console.log('Check canActive in guard', this.user.isToken());
+    if (this.user.isToken()) {
+      const rt = route.component;
+      console.log('Check router in guard', rt);
+      console.log('Check canActive in guard', this.user.isToken());
 
-    //   return true;
-    // } else {
-    //   this.router.navigate(['/login']);
-    //   return false;
-    // }
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 
   canActivateChild(

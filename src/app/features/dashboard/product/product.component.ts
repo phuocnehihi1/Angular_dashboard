@@ -3,7 +3,6 @@ import { ProductServices } from './products.service';
 import { metadata, addProduct } from '../../../core/models/interfaces/product';
 import {
   debounceTime,
-  Observable,
   startWith,
   tap,
   of,
@@ -13,11 +12,13 @@ import {
   forkJoin,
   mergeMap,
   Subject,
+  switchAll,
 } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { itemSelect } from './selector';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -35,7 +36,7 @@ export class ProductComponent implements OnInit {
   }
 
   data: metadata[] = [];
-
+  lenght: number = 0;
   data$: Observable<metadata[]> = new Observable<metadata[]>();
   datapublish: metadata[] = [];
   datapubDarf: metadata[] = [];
@@ -47,14 +48,20 @@ export class ProductComponent implements OnInit {
   onDestroy$: Subject<any> = new Subject<any>();
   constructor(
     private product: ProductServices,
-    private router: Router, // private newProduct: AddProductComponent
-    private dataService: DataServiceService
+    private router: Router // private newProduct: AddProductComponent
   ) {}
   isToggle: boolean = false;
 
   // Loading Darf
   loadProductDarf() {
     this.data$ = this.product.mapData();
+    this.data$
+      .pipe(
+        map((data) => {
+          this.lenght = data.length;
+        })
+      )
+      .subscribe();
   }
 
   // Thực hiện tìm kiếm.
@@ -86,95 +93,63 @@ export class ProductComponent implements OnInit {
       this.loadProductDarf();
     }, 1000);
 
+    this.searchProduct();
+  }
+
+  searchProduct() {
     this.formQuery.valueChanges
       .pipe(
-        debounceTime(500),
+        startWith(''), // 🟢 Khởi tạo giá trị ban đầu là chuỗi rỗng
+        debounceTime(500), // 🟢 Đợi 500ms để tránh gọi API liên tục
         tap(() => {
           this.loading = true;
         }),
-        startWith('')
-      )
-      .subscribe((d) => {
-        // console.log('abcd', d);
-        this.data$
-          .pipe(
-            delay(500),
+        switchMap((value) => {
+          // 🟢 Dùng switchMap để hủy request cũ nếu có request mới
+          return this.data$.pipe(
             map((data) => {
-              // console.log('Lấy dữ liệu từ form', d);
-              // console.log('Data Observable', data);
-              return data.filter((x) => {
-                if (!d) return true;
-                return x.product_name.toLowerCase().includes(d.toLowerCase());
-              });
+              if (!value) return data; // 🔥 Trả về mảng rỗng nếu không có giá trị nhập vào
+              return data.filter((x) =>
+                x.product_name.toLowerCase().includes(value.toLowerCase())
+              );
             })
-          )
-          .subscribe((result) => {
-            this.data$ = of(result);
-          });
+          );
+        })
+      )
+      .subscribe((filteredData) => {
+        this.data$ = of(filteredData); // 🟢 Cập nhật data$
+        this.loading = false; // 🟢 Tắt loading khi có kết quả
       });
   }
 
   ngOnDestroy(): void {
     this.onDestroy$.next(null);
   }
-
-  // public addProduct() {
-  //   this.dataService.data.subscribe({
-  //     next: (data) => {
-  //       if (!data.value) {
-  //         console.log('undifine ');
-  //       } else {
-  //         console.log('Đã vào đây product Load ', data.value.arraySizeProduct);
-  //         this.product.addPNewProduct(
-  //           data.value.nameProduct,
-  //           data.value.imageProduct,
-  //           data.value.priceProduct,
-  //           data.value.selectProduct,
-  //           data.value.quantityProduct,
-  //           data.value.sizeProduct,
-  //           data.value.brandProduct,
-  //           data.value.materialProduct,
-  //           data.value.colorBludProduct,
-  //           data.value.colorRedProduct,
-  //           data.value.colorPurpleProduct,
-  //           data.value.colorYellorProduct,
-  //           data.value.dicriptionProduct
-  //         );
-  //         this.loadProductDarf();
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.log('mess Error', error);
-  //     },
-  //     complete: () => {
-  //       console.log('complate');
-  //     },
-  //   });
 }
 
-//   search(text: string) {
-//   if (!text) {
-//     this.data;
-//   } else {
-//     this.data = this.product.getDataArray(text);
-//   }
-// }
-
-// this.newProduct.currentFormGroup
+// this.formQuery.valueChanges
 //   .pipe(
-//     map((data) => {
-//       return data.value;
-//     })
+//     debounceTime(500),
+//     tap(() => {
+//       this.loading = true;
+//     }),
+//     startWith('')
 //   )
-//   .subscribe({
-//     next: (value) => {
-//       console.log('Value', value);
-//     },
-//     error: (error) => {
-//       console.log('Mess', error);
-//     },
-//     complete: () => {
-//       console.log('complate');
-//     },
+//   .subscribe((d) => {
+//     // console.log('abcd', d);
+//     this.data$
+//       .pipe(
+//         delay(500),
+//         map((data) => {
+//           // console.log('Lấy dữ liệu từ form', d);
+//           // console.log('Data Observable', data);
+//           return data.filter((x) => {
+//             if (!d) return true;
+//             return x.product_name.toLowerCase().includes(d.toLowerCase());
+//           });
+//         })
+//       )
+//       .subscribe((result) => {
+//         this.data$ = of(result);
+//       });
 //   });
-// }

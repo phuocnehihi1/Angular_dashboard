@@ -9,6 +9,7 @@ import { UpdateProductComponent } from './update-product/update-product.componen
 
 const routes: Routes = [
   {
+    canActivate: [userGuard],
     path: '',
     component: DashboardComponent,
     children: [

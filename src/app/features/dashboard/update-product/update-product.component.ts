@@ -107,6 +107,6 @@ export class UpdateProductComponent implements OnInit {
       })
       .subscribe();
     localStorage.removeItem('item');
-    this.router.navigate([''], {});
+    this.router.navigate(['dashboard/product'], {});
   }
 }
